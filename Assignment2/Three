@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class Three 
+{
+    public static void sort_chars(String str) 
+    { 
+        int j=0;
+        char ch=0;
+        char[] temp= str.toCharArray();
+        for(int i=0;i< temp.length;i++)
+        {
+        	for(j=0;j<temp.length;j++)
+        	{
+        		if(temp[j]>temp[i])
+        		{
+        			// swap
+        			ch= temp[i];
+        			temp[i]=temp[j];
+        			temp[j]=ch;
+        		}
+        	}
+        }
+        System.out.print("Answer: ");
+        for(int k=0; k < temp.length; k++) 
+        {
+	         System.out.print(temp[k]);
+	    }
+     } 
+    
+    public static void main(String args[]) 
+    { 
+    	Scanner sc = new Scanner(System.in);
+        System.out.print("Enter unsorted string: ");
+        String str= sc.nextLine();
+        sort_chars(str); 
+    } 
+} 
