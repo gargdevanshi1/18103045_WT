@@ -1,0 +1,47 @@
+import java.util.*;
+public class Two 
+{ 
+    public static void counting_sort(int arr[]) 
+    { 
+        int n = arr.length; 
+  
+        int ans[] = new int[n]; 
+  
+        int count[] = new int[21]; 
+        for (int i=0; i<21; i++) 
+            count[i] = 0; 
+   
+        for (int i=0; i<n; i++) 
+            count[arr[i]]++; 
+  
+        for (int i=1; i<=20; i++) 
+            count[i] += count[i-1]; 
+  
+        for (int i = n-1; i>=0; i--) 
+        { 
+            ans[count[arr[i]]-1] = arr[i]; 
+            count[arr[i]]--; 
+        } 
+  
+        for (int i = 0; i<n; ++i) 
+            arr[i] = ans[i]; 
+    } 
+    
+    public static void main(String args[]) 
+    { 
+    	Scanner sc = new Scanner(System.in);
+        System.out.print("Enter n: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter n numbers in range 0-20: ");
+        for(int i=0;i<n;i++)
+        {
+            arr[i] = sc.nextInt();
+        }
+        counting_sort(arr); 
+  
+        System.out.print("Sorted array is "); 
+        for (int i=0; i<arr.length; ++i) 
+            System.out.print(arr[i]+" "); 
+    } 
+} 
