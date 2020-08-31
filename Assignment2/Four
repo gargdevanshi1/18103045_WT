@@ -1,0 +1,20 @@
+import java.util.*;
+
+public class Four
+{
+	public static void main(String arg[]){
+
+        int n = 1;
+        int sum = 0;
+
+        while(n < Integer.MAX_VALUE){
+	    sum+=n;
+            if(sum == n*n)
+	    {
+                System.out.println("Smallest value of n is: " + n);
+		break;
+	    }
+            n++;
+        }
+    }
+}
