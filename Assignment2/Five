@@ -1,0 +1,217 @@
+import java.util.*;
+
+public class Five{
+
+    public static void main(String arg[]){
+
+        Scanner s = new Scanner(System.in);
+        
+        System.out.println("Enter number of elements in universe");
+        int u = s.nextInt();
+        System.out.println("Enter no. of elements in set A");
+        int a = s.nextInt();
+        System.out.println("Enter no. of elements in set B");
+        int b = s.nextInt();
+        
+        ArrayList<Integer> uni = new ArrayList<Integer>();
+        ArrayList<Integer> a1 = new ArrayList<Integer>();
+        ArrayList<Integer> a2 = new ArrayList<Integer>();
+        
+        for(int i=0; i<u; i++)
+        {
+            uni.add(i);
+        }
+        
+        int temp;
+        boolean check;
+
+        System.out.println("\nEnter elements of set A ( must be less than "+u+" ): ");
+        
+        for(int i=0; i<a; i++)
+        {
+            temp = s.nextInt();
+            check = false;
+            // because a1 is a set so every element should be present only once.
+            for(int j=0; j<a1.size(); j++){
+                if(a1.get(j) == temp){
+                    check = true;
+                }
+            }
+            if(!check)
+            {
+                a1.add(temp);
+            }
+        }
+
+        System.out.println("\nEnter elements of set B( must be less than "+u+" ): ");
+
+        for(int i=0; i<b; i++)
+        {
+            temp = s.nextInt();
+            check = false;
+
+            for(int j=0; j<a2.size(); j++){
+                if(a2.get(j)==temp){
+                    check = true;
+                }
+            }
+            if(!check)
+            {
+                a2.add(temp);
+            }
+        }
+
+        // Using Arrays
+        System.out.println("\nA) Using Arrays");
+
+        // Union
+        long startTime = System.nanoTime();
+        ArrayList<Integer> union_arr = new ArrayList<Integer>();
+
+        for(int i=0; i<a1.size(); i++)
+        {
+            check = false;
+            for(int j=0; j<union_arr.size(); j++){
+                if(a1.get(i) == union_arr.get(j)){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check){
+                union_arr.add(a1.get(i));
+            }
+        }
+
+        for(int i=0; i<a2.size(); i++)
+        {
+            check = false;
+            for(int j=0; j<union_arr.size(); j++){
+                if(a2.get(i) == union_arr.get(j)){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check)
+            {
+                union_arr.add(a2.get(i));
+            }
+        }
+
+        System.out.println("Union of set A and set B is: ");
+        for(int i=0; i<union_arr.size(); i++)
+        {
+                System.out.print(union_arr.get(i)+" ");
+        }
+        long endTime= System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("Duration: " + duration + "ns");
+
+        // Intersection
+        startTime = System.nanoTime();
+        ArrayList<Integer> inter_arr = new ArrayList<Integer>();
+        for(int i=0; i<a1.size(); i++){
+            check = false;
+            for(int j=0; j<a2.size(); j++){
+                if(a1.get(i) == a2.get(j)){
+                    check = true;
+                    break;
+                }
+            }
+            if(check){
+            	inter_arr.add(a1.get(i));
+            }
+        }
+
+        System.out.println("\nIntersection of set A and set B is: ");
+        for(int i=0; i<inter_arr.size(); i++){
+                System.out.print(inter_arr.get(i)+" ");
+        }
+        endTime= System.nanoTime();
+        duration = endTime - startTime;
+        System.out.println("Duration: " + duration + "ns");
+
+        // Compliment
+        startTime = System.nanoTime();
+        ArrayList<Integer> set_diff = new ArrayList<Integer>();
+
+        for(int i=0; i<uni.size(); i++){
+            check = false;
+            for(int j=0; j<a1.size(); j++){
+                if(a1.get(j) == uni.get(i)){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check){
+                set_diff.add(uni.get(i));
+            }
+        }
+
+        System.out.print("\nCompliment of set A is: ");
+        for(int i=0; i<set_diff.size(); i++){
+                System.out.print(set_diff.get(i)+" ");
+        }
+        
+        ArrayList<Integer> set_diff_ba = new ArrayList<Integer>();
+        for(int i=0; i<uni.size(); i++){
+            check = false;
+            for(int j=0; j<a2.size(); j++){
+                if(a2.get(j) == uni.get(i)){
+                    check = true;
+                    break;
+                }
+            }
+            if(!check){
+            	set_diff_ba.add(uni.get(i));
+            }
+        }
+
+        System.out.print("\nCompliment of set B is: ");
+        for(int i=0;i<set_diff_ba.size();i++){
+                System.out.print(set_diff_ba.get(i)+" ");
+        }
+        endTime= System.nanoTime();
+        duration = endTime - startTime;
+        System.out.println("Duration: " + duration + "ns");
+
+
+        // Using optimal Data Structure (SETS)
+        System.out.println("\n\nUsing Data Structure Sets");
+        Set<Integer> universe = new HashSet<Integer>(), set1 = new HashSet<Integer>(), set2 = new HashSet<Integer>();
+        universe.addAll(uni);
+        set1.addAll(a1);
+        set2.addAll(a2);
+
+        // Union
+        startTime = System.nanoTime();
+        Set<Integer> union_set = new HashSet<Integer>(set1);
+	union_set.addAll(set2);
+        System.out.println("\nUnion of set A and set B is: ");
+        System.out.println(union_set);
+        duration = System.nanoTime() - startTime;
+        System.out.println("Duration: " + duration + "ns");
+
+        // Intersection
+        startTime = System.nanoTime();
+        Set<Integer> intersection_set = new HashSet<Integer>(set1);
+	intersection_set.retainAll(set2);
+        System.out.println("\nIntersection of set A and set B is: ");
+        System.out.println(intersection_set);
+        duration = System.nanoTime() - startTime;
+        System.out.println("Duration: " + duration + "ns");
+
+        // Set Difference
+        startTime = System.nanoTime();
+        Set<Integer> diff_set_ab = new HashSet<Integer>(universe), diff_set_ba = new HashSet<Integer>(universe);
+        diff_set_ab.removeAll(set1);
+        System.out.println("\nCompliment of set A is: ");
+        System.out.println(diff_set_ab);
+
+        diff_set_ba.removeAll(set2);
+        System.out.println("Compliment of set B is: ");
+        System.out.println(diff_set_ba);
+        duration = System.nanoTime() - startTime;
+        System.out.println("Duration " + duration + "ns");
+
+    }
+} 
